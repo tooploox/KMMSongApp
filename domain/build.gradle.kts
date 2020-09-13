@@ -33,7 +33,7 @@ kotlin {
         val commonMain by getting{
             dependencies {
                 implementation("org.kodein.di:kodein-di:7.0.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8")
             }
         }
         val commonTest by getting {
@@ -53,7 +53,11 @@ kotlin {
                 implementation("junit:junit:4.12")
             }
         }
-        val iosMain by getting
+        val iosMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.3.8")
+            }
+        }
         val iosTest by getting
     }
 }
