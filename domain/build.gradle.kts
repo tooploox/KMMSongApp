@@ -15,7 +15,7 @@ repositories {
     mavenCentral()
 }
 kotlin {
-    android{
+    android {
         tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
             kotlinOptions {
                 jvmTarget = "1.8"
@@ -30,10 +30,10 @@ kotlin {
         }
     }
     sourceSets {
-        val commonMain by getting{
+        val commonMain by getting {
             dependencies {
                 implementation("org.kodein.di:kodein-di:7.0.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.8")
             }
         }
         val commonTest by getting {
@@ -44,6 +44,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.8")
                 implementation("com.google.android.material:material:1.2.0")
             }
         }
@@ -60,6 +61,12 @@ kotlin {
         }
         val iosTest by getting
     }
+}
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
+    kotlinOptions.freeCompilerArgs += listOf(
+        "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+        "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
+    )
 }
 android {
     compileSdkVersion(29)
