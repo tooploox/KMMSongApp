@@ -14,6 +14,7 @@ repositories {
 }
 dependencies {
     implementation(project(":domain"))
+    implementation(project(":local"))
     implementation("com.google.android.material:material:1.2.0")
     implementation("androidx.appcompat:appcompat:1.2.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
