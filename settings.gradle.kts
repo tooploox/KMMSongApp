@@ -18,4 +18,4 @@ rootProject.name = "SongApp"
 
 include(":androidApp")
 include(":domain")
-
+include(":local")

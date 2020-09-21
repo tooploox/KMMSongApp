@@ -9,12 +9,10 @@ import org.kodein.di.setBinding
 import org.kodein.di.singleton
 
 val domain = DI.Module(name = "domain") {
-    bind<SongsRepository>() with singleton { MockLocalRepository() }
     bind<SelectedSongSourcesRepository>() with singleton { InMemorySelectedSongSourcesRepository() }
 
     bind() from setBinding<SongsRepository>()
     bind<SongsRepository>().inSet() with singleton { MockItunesRepository() }
-    bind<SongsRepository>().inSet() with singleton { MockLocalRepository() }
 
     bind<ObserveSongs>() with provider { ObserveSongs(instance(), instance()) }
     bind<SelectSource>() with provider { SelectSource(instance()) }
