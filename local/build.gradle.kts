@@ -1,9 +1,11 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("kotlin-android-extensions")
+    kotlin("plugin.serialization") version "1.4.10"
 }
 
 repositories {
@@ -27,14 +29,11 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.kodein.di:kodein-di:7.0.0")
+                implementation("org.kodein.di:kodein-di:7.1.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.8")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0-RC2")
                 implementation(project(":domain"))
-                tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-                    kotlinOptions {
-                        jvmTarget = "1.8"
-                    }
-                }
+
             }
         }
         val commonTest by getting {
@@ -58,19 +57,25 @@ kotlin {
         val iosMain by getting
         val iosTest by getting
     }
+
+    tasks.withType<KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
 }
 android {
     compileSdkVersion(29)
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdkVersion(24)
         targetSdkVersion(29)
-        versionCode = 1
-        versionName = "1.0"
     }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
+    sourceSets {
+        getByName("main") {
+            manifest.srcFile("src/androidMain/AndroidManifest.xml")
+            // Here we make usable main/assets directory in Android-specific module
+            // Should we do something similar for iOS, or maybe copy file during build phase?
+            assets.srcDirs("src/main/assets")
         }
     }
 }

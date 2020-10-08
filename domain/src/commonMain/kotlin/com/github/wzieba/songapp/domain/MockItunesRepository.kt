@@ -6,7 +6,7 @@ class MockItunesRepository : SongsRepository {
 
     override val type = SongSource.ITUNES
 
-    override fun observe() = flow {
+    override fun observeSongs() = flow {
         this.emit(listOf(Song("Itunes song")))
     }
 }
