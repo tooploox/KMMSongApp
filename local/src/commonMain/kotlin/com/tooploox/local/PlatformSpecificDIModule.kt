@@ -1,4 +1,4 @@
-package io.spire.local
+package com.tooploox.local
 
 import org.kodein.di.DI
 
