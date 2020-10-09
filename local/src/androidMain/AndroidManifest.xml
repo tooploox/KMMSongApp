@@ -1,3 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.spire.local.android" />
+<manifest package="com.tooploox.local.android" />

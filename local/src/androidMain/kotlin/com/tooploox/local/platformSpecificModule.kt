@@ -1,4 +1,4 @@
-package io.spire.local
+package com.tooploox.local
 
 import org.kodein.di.DI
 import org.kodein.di.bind
@@ -7,6 +7,6 @@ import org.kodein.di.singleton
 
 actual val platformSpecificModule: DI.Module = DI.Module("androidLocalModule") {
 
-    bind<FileProvider>() with singleton { FileProvider(instance()) }
+    bind<PlatformSpecificFileProvider>() with singleton { PlatformSpecificFileProvider(instance()) }
 
 }
