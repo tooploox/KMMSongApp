@@ -17,6 +17,20 @@ repositories {
         url = uri("https://dl.bintray.com/kotlin/kotlin-eap")
     }
 }
+
+//dependencies
+apply(from = "../dependencies.gradle.kts")
+
+val kodein: String by extra
+val coroutinesCore: String by extra
+val serialization: String by extra
+val testCommon: String by extra
+val testAnnotationsCommon: String by extra
+val coroutinesAndroid: String by extra
+val androidXCore: String by extra
+val testJUnit: String by extra
+val jUnit: String by extra
+
 kotlin {
     android()
     ios {
@@ -29,29 +43,29 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.kodein.di:kodein-di:7.1.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.8")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0-RC2")
+                implementation(kodein)
+                implementation(coroutinesCore)
+                implementation(serialization)
                 implementation(project(":domain"))
 
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
+                implementation(kotlin(testCommon))
+                implementation(kotlin(testAnnotationsCommon))
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.8")
-                implementation("androidx.core:core-ktx:1.2.0")
+                implementation(coroutinesAndroid)
+                implementation(androidXCore)
             }
         }
         val androidTest by getting {
             dependencies {
-                implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.12")
+                implementation(kotlin(testJUnit))
+                implementation(jUnit)
             }
         }
         val iosMain by getting
@@ -84,7 +98,8 @@ val packForXcode by tasks.creating(Sync::class) {
     val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
     val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
     val targetName = "ios" + if (sdkName.startsWith("iphoneos")) "Arm64" else "X64"
-    val framework = kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
+    val framework =
+        kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
     inputs.property("mode", mode)
     dependsOn(framework.linkTask)
     val targetDir = File(buildDir, "xcode-frameworks")
