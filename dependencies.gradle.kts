@@ -7,6 +7,17 @@ val lifecycleVersion: String = "2.2.0"
 
 extra.apply {
     set(
+        "composeVersion",
+        composeVersion
+    )
+    set(
+        "kotlinVersion",
+        kotlinVersion
+    )
+}
+
+extra.apply {
+    set(
         "coroutinesCore",
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}"
     )
@@ -26,6 +37,10 @@ extra.apply {
     set(
         "composeMaterial",
         "androidx.compose.material:material:${composeVersion}"
+    )
+    set(
+        "composeCompiler",
+        "androidx.compose.compiler:compiler:${composeVersion}"
     )
     set(
         "composeLiveData",
@@ -91,7 +106,7 @@ extra.apply {
 
     set(
         "gradle",
-        "com.android.tools.build:gradle:4.0.0"
+        "com.android.tools.build:gradle:4.1.1"
     )
     set(
         "kotilnGradlePlugin",

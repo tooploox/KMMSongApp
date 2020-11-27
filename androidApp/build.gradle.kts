@@ -15,6 +15,9 @@ repositories {
 //dependencies
 apply(from = "../dependencies.gradle.kts")
 
+val kotlinVersion: String by extra
+val composeVersion: String by extra
+
 val material: String by extra
 val appCompat: String by extra
 val constraintLayout: String by extra
@@ -29,6 +32,7 @@ val composeLiveData: String by extra
 val composeFoundation: String by extra
 val composeFoundationLayout: String by extra
 val composeRuntime: String by extra
+val composeCompiler: String by extra
 
 val uiTooling: String by extra
 
@@ -42,6 +46,7 @@ dependencies {
     implementation(lifecycleRuntime)
     implementation(lifecycleLiveData)
     implementation(kodeinAndroid)
+    implementation(composeCompiler)
     implementation(composeUi)
     implementation(composeMaterial)
     implementation(uiTooling)
@@ -72,7 +77,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.0.0-alpha05"
-        kotlinCompilerVersion = "1.4.10"
+        kotlinCompilerExtensionVersion = composeVersion
+        kotlinCompilerVersion = kotlinVersion
     }
 }
