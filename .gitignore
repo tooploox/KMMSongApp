@@ -4,4 +4,10 @@ build/
 .idea/
 .DS_STORE
 local.properties
+*.hprof
 
+## Xcode User settings
+xcuserdata/
+
+## Pods
+Pods/

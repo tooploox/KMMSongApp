@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
+    kotlin("native.cocoapods")
     id("com.android.library")
 }
 group = "com.github.wzieba.songapp"
@@ -21,18 +22,20 @@ kotlin {
             }
         }
     }
-    ios {
-        binaries {
-            framework {
-                baseName = "domain"
-            }
-        }
+    ios()
+
+    cocoapods {
+        summary = "SongApp domian library."
+        homepage = "https://github.com/tooploox/KMMSongApp"
+        ios.deploymentTarget = "14.2.1"
+        podfile = project.file("../iosApp/Podfile")
     }
+
     sourceSets {
         val commonMain by getting {
             dependencies {
                 implementation("org.kodein.di:kodein-di:7.1.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0")
             }
         }
         val commonTest by getting {
@@ -50,7 +53,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
     )
 }
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(30)
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 }
 val packForXcode by tasks.creating(Sync::class) {

@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: build 
+      - name: build
         run: ./gradlew :androidApp:buildDebug
       - name: test
         run: ./gradlew test
@@ -44,7 +44,17 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+      - name: Cache RubyGems
+        uses: actions/cache@v1
+        with:
+          path: iosApp/gems
+          key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: ${{ runner.os }}-gem-
+      - name: Bundle Install
+        run: (cd iosApp ; bundle config path gems ; bundle install)
+      - name: Install dependencies
+        run: (cd iosApp ; pod install)
       - name: Kotlin/Native unit tests
         run: ./gradlew iosX64Test
       - name: build and test
-        run: xcodebuild test -project iosApp/iosApp.xcodeproj -scheme iosApp -destination "platform=iOS Simulator,name=iPhone 11 Pro"
+        run: xcodebuild test -workspace iosApp/iosApp.xcworkspace -scheme iosApp -destination "platform=iOS Simulator,name=iPhone 11 Pro"
