@@ -11,22 +11,49 @@ repositories {
     jcenter()
     mavenCentral()
 }
+
+//dependencies
+apply(from = "../dependencies.gradle.kts")
+
+val kotlinVersion: String by extra
+val composeVersion: String by extra
+
+val material: String by extra
+val appCompat: String by extra
+val constraintLayout: String by extra
+val coroutinesAndroid: String by extra
+val lifecycleRuntime: String by extra
+val lifecycleLiveData: String by extra
+val kodeinAndroid: String by extra
+
+val composeUi: String by extra
+val composeMaterial: String by extra
+val composeLiveData: String by extra
+val composeFoundation: String by extra
+val composeFoundationLayout: String by extra
+val composeRuntime: String by extra
+val composeCompiler: String by extra
+
+val uiTooling: String by extra
+
 dependencies {
     implementation(project(":domain"))
     implementation(project(":local"))
-    implementation("com.google.android.material:material:1.2.0")
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.8")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
-    implementation("org.kodein.di:kodein-di-framework-android-x:7.0.0")
-    implementation("androidx.compose.ui:ui:1.0.0-alpha05")
-    implementation("androidx.compose.material:material:1.0.0-alpha05")
-    implementation("androidx.ui:ui-tooling:1.0.0-alpha05")
-    implementation("androidx.compose.runtime:runtime-livedata:1.0.0-alpha05")
-    implementation("androidx.compose.foundation:foundation:1.0.0-alpha05")
-    implementation("androidx.compose.foundation:foundation-layout:1.0.0-alpha05")
-    implementation("androidx.compose.runtime:runtime:1.0.0-alpha05")
+    implementation(material)
+    implementation(appCompat)
+    implementation(constraintLayout)
+    implementation(coroutinesAndroid)
+    implementation(lifecycleRuntime)
+    implementation(lifecycleLiveData)
+    implementation(kodeinAndroid)
+    implementation(composeCompiler)
+    implementation(composeUi)
+    implementation(composeMaterial)
+    implementation(uiTooling)
+    implementation(composeLiveData)
+    implementation(composeFoundation)
+    implementation(composeFoundationLayout)
+    implementation(composeRuntime)
 }
 android {
     compileSdkVersion(29)
@@ -50,7 +77,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.0.0-alpha05"
-        kotlinCompilerVersion = "1.4.10"
+        kotlinCompilerExtensionVersion = composeVersion
+        kotlinCompilerVersion = kotlinVersion
     }
 }

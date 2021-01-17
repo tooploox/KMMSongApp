@@ -13,6 +13,21 @@ repositories {
     jcenter()
     mavenCentral()
 }
+
+//dependencies
+apply(from = "../dependencies.gradle.kts")
+
+val kodein: String by extra
+val coroutinesCore: String by extra
+val coroutinesCoreNative: String by extra
+val testCommon: String by extra
+val testAnnotationsCommon: String by extra
+val coroutinesAndroid: String by extra
+val material: String by extra
+val androidXCore: String by extra
+val testJUnit: String by extra
+val jUnit: String by extra
+
 kotlin {
     android {
         tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
@@ -31,16 +46,34 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.kodein.di:kodein-di:7.1.0")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
+                implementation(kodein)
+                implementation(coroutinesCore)
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
+                implementation(kotlin(testCommon))
+                implementation(kotlin(testAnnotationsCommon))
             }
         }
+        val androidMain by getting {
+            dependencies {
+                implementation(coroutinesAndroid)
+                implementation(material)
+            }
+        }
+        val androidTest by getting {
+            dependencies {
+                implementation(kotlin(testJUnit))
+                implementation(jUnit)
+            }
+        }
+        val iosMain by getting {
+            dependencies {
+                implementation(coroutinesCoreNative)
+            }
+        }
+        val iosTest by getting
     }
 }
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
